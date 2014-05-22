@@ -66,9 +66,12 @@ define logstash::plugin (
   $type,
   $ensure = 'present',
   $filename = '',
+  $force = true
 ){
 
-  validate_re($source, '^puppet://', 'Source must be from a puppet fileserver (begin with puppet://)' )
+  if $force {
+    validate_re($source, '^puppet://', 'Source must be from a puppet fileserver (begin with puppet://)' )
+  }
 
   if ! ($ensure in [ 'present', 'absent' ]) {
     fail("\"${ensure}\" is not a valid ensure parameter value")
